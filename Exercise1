@@ -1,0 +1,140 @@
+using System;
+using System.Reflection.Metadata.Ecma335;
+
+namespace Program
+
+{  
+    class Program
+    {
+
+        //It's far from perfect
+        static void Main(string[] args)
+        {
+            //Turbo the console app
+
+            Console.Title = "REIZ";
+            Console.ForegroundColor = ConsoleColor.DarkCyan;
+
+            //Arguments
+
+            int hours = 0;
+            int minutes = 0;
+
+            //Ask for input
+
+            Console.WriteLine("Welcome to my program");
+            Console.Write("Please input the hours: ");
+
+            //Check if input is an int
+
+            var checkIfInt = Console.ReadLine();
+            bool parseSuccess = int.TryParse(checkIfInt, out hours);
+            if (parseSuccess)
+            {
+                //Converter
+
+
+                if (hours >= 13 && hours <= 24)
+                {
+
+                    Console.WriteLine("I would have prefered a 12 hour format, but OK, I will convert it for you :)");
+                    hours = hours - 12;
+                    Console.WriteLine("The converted value is: " + hours);
+                    Console.Write("Please input the minutes: ");
+                    minutes = Convert.ToInt32(Console.ReadLine());
+                    if (minutes < 0 || minutes >= 60)
+                    {
+                        do
+                        {
+                            Console.WriteLine("There is only 60 minutes in one hour!");
+                            Console.Write("Try again: ");
+                            minutes = Convert.ToInt32(Console.ReadLine());
+
+                        } while (minutes < 0 || minutes >= 60);
+                    }
+                }
+
+                //If input is less/more than hours in a day
+
+                else if (hours <= 0 || hours > 24)
+                {
+                    do
+                    {
+                        Console.WriteLine("The input is wrong! Keep in mind that there are only 24 hours in one day!"); 
+                        Console.Write("Try again: ");
+                        hours = Convert.ToInt32(Console.ReadLine());
+
+                    } while (hours < 0 || hours > 24);
+
+                    if (hours >= 13 && hours <= 24)
+                    {
+
+                        Console.WriteLine("I would have prefered a 12 hour format, but OK, I will convert it for you :)");
+                        hours = hours - 12;
+                        Console.WriteLine("The converted value is: " + hours);
+                        
+                    }
+
+                    Console.Write("Please input the minutes: ");
+                    minutes = Convert.ToInt32(Console.ReadLine());
+
+                    if (minutes < 0 || minutes >= 60)
+                    {
+                        do
+                        {
+                            Console.WriteLine("There is only 60 minutes in one hour!");
+                            Console.Write("Try again: ");
+                            minutes = Convert.ToInt32(Console.ReadLine());
+
+                        } while (minutes < 0 || minutes >= 60);
+                    }
+                }
+                else if (hours > 0 || hours > 24)
+                {
+                    Console.Write("Please input the minutes: ");
+                    minutes = Convert.ToInt32(Console.ReadLine());
+
+                    if (minutes < 0 || minutes >= 60)
+                    {
+                        do
+                        {
+                            Console.WriteLine("There is only 60 minutes in one hour!");
+                            Console.Write("Try again: ");
+                            minutes = Convert.ToInt32(Console.ReadLine());
+
+                        } while (minutes < 0 || minutes >= 60);
+                    }
+                }
+            }
+            else 
+            {
+                Console.WriteLine("Stop trolling, input a number and start over please :)");
+            }
+
+            //Calculations
+
+            if (minutes == 60)
+            {
+                minutes = 0;
+                hours += 1;
+
+            }
+
+            int hour_angle = (int)(0.5 * (hours * 60 + minutes));
+            int minute_angle = (int)(6 * minutes);
+
+            //Difference between angles
+
+            int angle = Math.Abs(hour_angle - minute_angle);
+
+            //To output the lesser angle
+
+            if (hours != 0)
+            { 
+            angle = Math.Min(360 - angle, angle);
+            Console.WriteLine("The angle between the hour and the minute arrows is: " + angle);
+            }
+        }
+    }
+}
+
