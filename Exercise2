@@ -1,0 +1,55 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
+//Create the structure and calculate the depth
+
+{
+var root = new Tree.Branch();
+var b1 = new Tree.Branch();
+var b2 = new Tree.Branch();
+var b3 = new Tree.Branch();
+var b4 = new Tree.Branch();
+var b5 = new Tree.Branch();
+root.AddBranch(b1);
+b1.AddBranch(b2);
+b2.AddBranch(b3);
+b3.AddBranch(b4);
+b4.AddBranch(b5);
+
+int depth = Tree.DepthCalculator.CalculateDepth(root);
+Console.WriteLine(depth);  // Output: 5
+}
+
+namespace Tree
+{
+    //Create a class for the branches
+    public class Branch
+    {
+        public List<Branch> Branches { get; set; }
+
+        public Branch()
+        {
+            Branches = new List<Branch>();
+        }
+
+        public void AddBranch(Branch branch)
+        {
+            Branches.Add(branch);
+        }
+    }
+
+    //Class for the calculator
+    public static class DepthCalculator
+    {
+        public static int CalculateDepth(Branch branch, int depth = 0)
+        {
+            if (branch.Branches.Count == 0)
+            {
+                return depth;
+            }
+            return branch.Branches.Max(b => CalculateDepth(b, depth + 1));
+        }
+    }
+}
+
